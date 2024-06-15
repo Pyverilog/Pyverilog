@@ -176,9 +176,23 @@ class VerilogParser(object):
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
 
+    def p_lparam(self, p):
+        'param : LOCALPARAM param_substitution_list COMMA'
+        paramlist = [Localparam(rname, rvalue, lineno=p.lineno(2))
+                     for rname, rvalue in p[2]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
     def p_param_signed(self, p):
         'param : PARAMETER SIGNED param_substitution_list COMMA'
         paramlist = [Parameter(rname, rvalue, signed=True, lineno=p.lineno(2))
+                     for rname, rvalue in p[3]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
+    def p_lparam_signed(self, p):
+        'param : LOCALPARAM SIGNED param_substitution_list COMMA'
+        paramlist = [Localparam(rname, rvalue, signed=True, lineno=p.lineno(2))
                      for rname, rvalue in p[3]]
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
@@ -190,9 +204,23 @@ class VerilogParser(object):
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
 
+    def p_lparam_width(self, p):
+        'param : LOCALPARAM width param_substitution_list COMMA'
+        paramlist = [Localparam(rname, rvalue, p[2], lineno=p.lineno(3))
+                     for rname, rvalue in p[3]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
     def p_param_signed_width(self, p):
         'param : PARAMETER SIGNED width param_substitution_list COMMA'
         paramlist = [Parameter(rname, rvalue, p[3], signed=True, lineno=p.lineno(3))
+                     for rname, rvalue in p[4]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
+    def p_lparam_signed_width(self, p):
+        'param : LOCALPARAM SIGNED width param_substitution_list COMMA'
+        paramlist = [Localparam(rname, rvalue, p[3], signed=True, lineno=p.lineno(3))
                      for rname, rvalue in p[4]]
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
@@ -204,9 +232,23 @@ class VerilogParser(object):
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
 
+    def p_lparam_integer(self, p):
+        'param : LOCALPARAM INTEGER param_substitution_list COMMA'
+        paramlist = [Localparam(rname, rvalue, lineno=p.lineno(3))
+                     for rname, rvalue in p[3]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
     def p_param_end(self, p):
         'param_end : PARAMETER param_substitution_list'
         paramlist = [Parameter(rname, rvalue, lineno=p.lineno(2))
+                     for rname, rvalue in p[2]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
+    def p_lparam_end(self, p):
+        'param_end : LOCALPARAM param_substitution_list'
+        paramlist = [Localparam(rname, rvalue, lineno=p.lineno(2))
                      for rname, rvalue in p[2]]
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
@@ -218,9 +260,23 @@ class VerilogParser(object):
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
 
+    def p_lparam_end_signed(self, p):
+        'param_end : LOCALPARAM SIGNED param_substitution_list'
+        paramlist = [Localparam(rname, rvalue, signed=True, lineno=p.lineno(2))
+                     for rname, rvalue in p[3]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
     def p_param_end_width(self, p):
         'param_end : PARAMETER width param_substitution_list'
         paramlist = [Parameter(rname, rvalue, p[2], lineno=p.lineno(3))
+                     for rname, rvalue in p[3]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
+    def p_lparam_end_width(self, p):
+        'param_end : LOCALPARAM width param_substitution_list'
+        paramlist = [Localparam(rname, rvalue, p[2], lineno=p.lineno(3))
                      for rname, rvalue in p[3]]
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
@@ -232,9 +288,23 @@ class VerilogParser(object):
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
 
+    def p_lparam_end_signed_width(self, p):
+        'param_end : LOCALPARAM SIGNED width param_substitution_list'
+        paramlist = [Localparam(rname, rvalue, p[3], signed=True, lineno=p.lineno(3))
+                     for rname, rvalue in p[4]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
     def p_param_end_integer(self, p):
         'param_end : PARAMETER INTEGER param_substitution_list'
         paramlist = [Parameter(rname, rvalue, lineno=p.lineno(3))
+                     for rname, rvalue in p[3]]
+        p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
+        p.set_lineno(0, p.lineno(1))
+
+    def p_lparam_end_integer(self, p):
+        'param_end : LOCALPARAM INTEGER param_substitution_list'
+        paramlist = [Localparam(rname, rvalue, lineno=p.lineno(3))
                      for rname, rvalue in p[3]]
         p[0] = Decl(tuple(paramlist), lineno=p.lineno(1))
         p.set_lineno(0, p.lineno(1))
